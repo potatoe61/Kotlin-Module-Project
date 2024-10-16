@@ -13,11 +13,18 @@ class NotesApp {
     }
 
     fun createArchive() {
-        println("Введите название архива:")
-        val name = readLine() ?: return
-        archives.add(Archive(++archiveCounter, name))
-        notes[archiveCounter] = mutableListOf()
-        println("Архив '$name' успешно создан.")
+        while (true) {
+            println("Введите название архива:")
+            val name = readLine()?.trim()
+            if (name.isNullOrEmpty()) {
+                println("Название архива не может быть пустым. Пожалуйста, попробуйте снова.")
+            } else {
+                archives.add(Archive(++archiveCounter, name))
+                notes[archiveCounter] = mutableListOf()
+                println("Архив '$name' успешно создан.")
+                break
+            }
+        }
     }
 
     fun displayArchives() {
@@ -31,12 +38,23 @@ class NotesApp {
     }
 
     fun createNote(archiveId: Int) {
-        println("Введите название заметки:")
-        val name = readLine() ?: return
-        println("Введите содержимое заметки:")
-        val content = readLine() ?: return
-        notes[archiveId]?.add(Note(++noteCounter, name, content))
-        println("Заметка '$name' успешно добавлена.")
+        while (true) {
+            println("Введите название заметки:")
+            val name = readLine()?.trim()
+            if (name.isNullOrEmpty()) {
+                println("Название заметки не может быть пустым. Пожалуйста, попробуйте снова.")
+            } else {
+                println("Введите содержимое заметки:")
+                val content = readLine()?.trim()
+                if (content.isNullOrEmpty()) {
+                    println("Содержимое заметки не может быть пустым. Пожалуйста, попробуйте снова.")
+                } else {
+                    notes[archiveId]?.add(Note(++noteCounter, name, content))
+                    println("Заметка '$name' успешно добавлена.")
+                    break
+                }
+            }
+        }
     }
 
     fun displayNotes(archiveId: Int) {
